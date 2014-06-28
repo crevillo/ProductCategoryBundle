@@ -6,7 +6,7 @@
  */
 
 
-namespace Crevillo\ProductCategoryBundle\Tests\eZ\Publish\Core\FieldType\Price\PriceTest;
+namespace Crevillo\ProductCategoryBundle\Tests\eZ\Publish\Core\FieldType\ProductCategory;
 
 use eZ\Publish\Core\FieldType\Tests\FieldTypeTest;
 use Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\Type as ProductCategoryType;

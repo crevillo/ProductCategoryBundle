@@ -21,7 +21,7 @@ class ProductCategory implements Converter
      *
      * @note Class should instead be configured as service if it gains dependencies.
      *
-     * @return \EzSystems\EzPriceBundle\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\Price
+     * @return \Crevillo\ProductCategoryBundle\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\ProductCategory
      */
     public static function create()
     {
