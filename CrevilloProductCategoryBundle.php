@@ -9,7 +9,7 @@ namespace Crevillo\ProductCategoryBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ProductCategoryBundle extends Bundle
+class CrevilloProductCategoryBundle extends Bundle
 {
     protected $name = 'ProductCategoryBundle';
 }
