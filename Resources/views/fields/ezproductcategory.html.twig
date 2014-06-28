@@ -1,0 +1,9 @@
+{% extends "EzPublishCoreBundle::content_fields.html.twig" %}
+
+{% block ezproductcategory_field %}
+    {% spaceless %}
+        {% if not ez_is_field_empty( content, field ) %}
+            {{ field.value.productCategoryId }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
