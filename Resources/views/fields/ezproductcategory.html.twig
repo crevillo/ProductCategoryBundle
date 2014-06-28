@@ -3,7 +3,7 @@
 {% block ezproductcategory_field %}
     {% spaceless %}
         {% if not ez_is_field_empty( content, field ) %}
-            {{ field.value.productCategoryId }}
+            {{ ezproductcategory_data( field.value.productCategoryId ).name }}
         {% endif %}
     {% endspaceless %}
 {% endblock %}

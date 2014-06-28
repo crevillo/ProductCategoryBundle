@@ -77,7 +77,11 @@ class Type extends FieldType
      */
     public function fromHash( $hash )
     {
-        return new Value( $hash['productCategoryId'] );
+        if ( $hash === null )
+        {
+            return $this->getEmptyValue();
+        }
+        return new Value( $hash );
     }
 
     /**
@@ -89,7 +93,11 @@ class Type extends FieldType
      */
     public function toHash( SPIValue $value )
     {
-        return array( 'productCategoryId' => $value->productCategoryId );
+        if ( $this->isEmptyValue( $value ) )
+        {
+            return null;
+        }
+        return (array)$value;
     }
 
     /**
@@ -101,7 +109,7 @@ class Type extends FieldType
      */
     public function isEmptyValue( SPIValue $value )
     {
-        return $value->productCategoryId === null;
+        return ( ( $value->productCategoryId === null ) || ( $value->productCategoryId === 0 ) );
     }
 
     /**
@@ -143,5 +151,4 @@ class Type extends FieldType
     {
         return true;
     }
-
 }

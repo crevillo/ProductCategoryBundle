@@ -24,11 +24,18 @@ class Value extends BaseValue
     /**
      * Construct a new Value object and initialize it $destinationContent
      *
-     * @param int|string $productCategoryId Id of the Product Category
+     * @param int|string|array $productCategoryId Id of the Product Category
      */
     public function __construct( $productCategoryId = null )
     {
-        $this->productCategoryId = $productCategoryId;
+        if ( is_array( $productCategoryId ) )
+        {
+            parent::__construct( $productCategoryId );
+        }
+        else
+        {
+            $this->productCategoryId = $productCategoryId;
+        }
     }
 
     /**

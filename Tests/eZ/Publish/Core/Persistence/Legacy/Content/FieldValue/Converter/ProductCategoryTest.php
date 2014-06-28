@@ -39,7 +39,7 @@ class ProductCategoryTest extends PHPUnit_Framework_TestCase
         $productCategoryId = 1;
 
         $fieldValue = new FieldValue(
-            array( 'data' => new ProductCategoryValue( 1 ) )
+            array( 'data' => array( 'productCategoryId' => 1 ) )
         );
 
         $storageFieldValue = new StorageFieldValue;
@@ -66,6 +66,6 @@ class ProductCategoryTest extends PHPUnit_Framework_TestCase
 
         $this->converter->toFieldValue( $storageFieldValue, $fieldValue );
 
-        self::assertEquals( $productCategoryId, $fieldValue->data->productCategoryId );
+        self::assertEquals( $productCategoryId, $fieldValue->data['productCategoryId'] );
     }
 }
