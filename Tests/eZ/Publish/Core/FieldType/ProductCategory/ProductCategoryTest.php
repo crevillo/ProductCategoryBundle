@@ -1,28 +1,28 @@
 <?php
 /**
- * This file is part of the EzPriceBundle package.
+ * This file is part of the ProductCategoryBundle package
  *
- * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 
-namespace EzSystems\EzPriceBundle\Tests\eZ\Publish\Core\FieldType\Price\PriceTest;
+
+namespace Crevillo\ProductCategoryBundle\Tests\eZ\Publish\Core\FieldType\Price\PriceTest;
 
 use eZ\Publish\Core\FieldType\Tests\FieldTypeTest;
-use EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price\Type as PriceType;
-use EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price\Value as PriceValue;
+use Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\Type as ProductCategoryType;
+use Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\Value as ProductCategoryValue;
 
 /**
  * @group fieldType
- * @group ezprice
- * @covers \EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price\Type
- * @covers \EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price\Value
+ * @group ezproductcategory
+ * @covers \Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\Type
+ * @covers \Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\Value
  */
-class PriceTest extends FieldTypeTest
+class ProductCategoryTest extends FieldTypeTest
 {
     protected function createFieldTypeUnderTest()
     {
-        $fieldType = new PriceType();
+        $fieldType = new ProductCategoryType();
         $fieldType->setTransformationProcessor( $this->getTransformationProcessorMock() );
 
         return $fieldType;
@@ -40,47 +40,46 @@ class PriceTest extends FieldTypeTest
 
     protected function getEmptyValueExpectation()
     {
-        return new PriceValue;
+        return new ProductCategoryValue;
     }
 
     public function provideInvalidInputForAcceptValue()
     {
         return array(
             array(
-                'foo',
-                'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
-            ),
-            array(
                 array(),
                 'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
             ),
             array(
-                new PriceValue( 'foo' ),
+                new ProductCategoryValue( array( 'productCategoryId' => true ) ),
                 'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
             ),
+            array(
+                new ProductCategoryValue( true ),
+                'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
+            ),
+            array(
+                new ProductCategoryValue( 20.3 ),
+                'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
+            )
         );
     }
-
 
     public function provideValidInputForAcceptValue()
     {
         return array(
             array(
                 null,
-                new PriceValue,
+                new ProductCategoryValue,
             ),
             array(
-                42.23,
-                new PriceValue( 42.23 ),
+                1,
+                new ProductCategoryValue( 1 ),
             ),
             array(
-                23,
-                new PriceValue( 23. ),
-            ),
-            array(
-                new PriceValue( 23.42 ),
-                new PriceValue( 23.42 ),
-            ),
+                'foo',
+                new ProductCategoryValue( 'foo' ),
+            )
         );
     }
 
@@ -88,16 +87,12 @@ class PriceTest extends FieldTypeTest
     {
         return array(
             array(
-                new PriceValue,
-                null,
+                new ProductCategoryValue(  1 ),
+                array( 'productCategoryId' => 1 ),
             ),
             array(
-                new PriceValue( 23.42 ),
-                array( 'price' => 23.42, 'isVatIncluded' => true ),
-            ),
-            array(
-                new PriceValue( 23.42, false ),
-                array( 'price' => 23.42, 'isVatIncluded' => false ),
+                new ProductCategoryValue( 'foo' ),
+                array( 'productCategoryId' => 'foo' ),
             ),
         );
     }
@@ -107,37 +102,29 @@ class PriceTest extends FieldTypeTest
         return array(
             array(
                 null,
-                new PriceValue,
+                new ProductCategoryValue,
             ),
             array(
-                array( 'price' => 23.42 ),
-                new PriceValue( 23.42 ),
+                array( 'productCategoryId' => 23 ),
+                new ProductCategoryValue( 23 ),
             ),
             array(
-                array( 'price' => 23.42, 'isVatIncluded' => false ),
-                new PriceValue( 23.42, false ),
-            ),
-            array(
-                array( 'price' => 23.42, 'isVatIncluded' => true ),
-                new PriceValue( 23.42, true ),
-            ),
-            array(
-                array( 'price' => 23.42, 'isVatIncluded' => true ),
-                new PriceValue( 23.42, true ),
+                array( 'productCategoryId' => 'foo' ),
+                new ProductCategoryValue( 'foo' ),
             ),
         );
     }
 
     protected function provideFieldTypeIdentifier()
     {
-        return 'ezprice';
+        return 'ezproductcategory';
     }
 
     public function provideDataForGetName()
     {
         return array(
             array( $this->getEmptyValueExpectation(), "" ),
-            array( new PriceValue( 23.42 ), "23.42" )
+            array( new ProductCategoryValue( 23 ), "23" )
         );
     }
 
@@ -146,7 +133,11 @@ class PriceTest extends FieldTypeTest
         return array(
             array(
                 array(),
-                new PriceValue( 7.5 ),
+                new ProductCategoryValue( 8 ),
+            ),
+            array(
+                array(),
+                new ProductCategoryValue( 'foo' ),
             ),
         );
     }
