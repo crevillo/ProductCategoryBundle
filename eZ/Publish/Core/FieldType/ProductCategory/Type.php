@@ -29,6 +29,8 @@ class Type extends FieldType
      *
      * @param \Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\Value $value
      *
+     * @todo return name instead
+     *
      * @return string
      */
     public function getName( SPIValue $value )
@@ -85,7 +87,7 @@ class Type extends FieldType
      *
      * @param \Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\Value $value
      *
-     * @return mixed
+     * @return array
      */
     public function toHash( SPIValue $value )
     {
