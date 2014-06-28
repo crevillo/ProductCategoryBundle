@@ -34,7 +34,9 @@ class ProductCategory implements Converter
      */
     public function toStorageValue( FieldValue $value, StorageFieldValue $storageFieldValue )
     {
-        $storageFieldValue->dataInt = $value->data->productCategoryId;
+        $storageFieldValue->dataInt = !empty( $value->data->productCategoryId )
+            ? $value->data->productCategoryId
+            : null;
         $storageFieldValue->sortKeyInt = $value->sortKey;
     }
 

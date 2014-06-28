@@ -11,5 +11,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class CrevilloProductCategoryBundle extends Bundle
 {
-    protected $name = 'ProductCategoryBundle';
+    protected $name = 'EzProductCategoryBundle';
 }
