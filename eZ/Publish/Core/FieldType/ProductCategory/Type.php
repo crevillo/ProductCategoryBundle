@@ -33,7 +33,7 @@ class Type extends FieldType
      */
     public function getName( SPIValue $value )
     {
-        return (string)$value->productCategoryId;
+        return (string)$value->id;
     }
 
     /**
@@ -47,12 +47,12 @@ class Type extends FieldType
      */
     protected function checkValueStructure( BaseValue $value )
     {
-        if ( !is_integer( $value->productCategoryId ) && !is_string( $value->productCategoryId ) )
+        if ( !is_integer( $value->id ) && !is_string( $value->id ) )
         {
             throw new InvalidArgumentType(
-                '$value->productCategoryId',
+                '$value->id',
                 'string|int',
-                $value->productCategoryId
+                $value->id
             );
         }
     }
@@ -77,7 +77,7 @@ class Type extends FieldType
      */
     public function fromHash( $hash )
     {
-        return new Value( $hash['productCategoryId'] );
+        return new Value( $hash );
     }
 
     /**
@@ -89,7 +89,10 @@ class Type extends FieldType
      */
     public function toHash( SPIValue $value )
     {
-        return array( 'productCategoryId' => $value->productCategoryId );
+        return array(
+            'id' => $value->id,
+            'name' => $value->name
+        );
     }
 
     /**
@@ -101,7 +104,7 @@ class Type extends FieldType
      */
     public function isEmptyValue( SPIValue $value )
     {
-        return $value->productCategoryId === null;
+        return $value->id === null;
     }
 
     /**
@@ -114,6 +117,11 @@ class Type extends FieldType
     protected function createValueFromInput( $inputValue )
     {
         if ( is_integer( $inputValue ) || is_string( $inputValue ) )
+        {
+            $inputValue = array( 'id' => $inputValue );
+        }
+
+        if ( is_array( $inputValue ) )
         {
             $inputValue = new Value( $inputValue );
         }
@@ -131,7 +139,7 @@ class Type extends FieldType
      */
     protected function getSortInfo( BaseValue $value )
     {
-        return (string)$value;
+        return $value->id;
     }
 
     /**

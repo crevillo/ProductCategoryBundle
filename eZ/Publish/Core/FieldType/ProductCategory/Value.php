@@ -15,29 +15,38 @@ use eZ\Publish\Core\FieldType\Value as BaseValue;
 class Value extends BaseValue
 {
     /**
-     * Product Category
+     * Product Category Id
      *
      * @var mixed|null
      */
-    public $productCategoryId;
+    public $id;
 
     /**
-     * Construct a new Value object and initialize it $destinationContent
+     * Name of the category
      *
-     * @param int|string $productCategoryId Id of the Product Category
+     * @var string
      */
-    public function __construct( $productCategoryId = null )
+    public $name = '';
+
+    /**
+     * Construct a new Value object
+     *
+     * @param int|string|array $values
+     */
+    public function __construct( $values = null )
     {
-        $this->productCategoryId = $productCategoryId;
+        if ( !is_array( $values ) )
+            $values = array( 'id' => $values );
+
+        parent::__construct( $values );
     }
 
     /**
-     * Returns the product category id
-     * @todo Return product category name instead
+     * Returns the product category name
      * @see \eZ\Publish\Core\FieldType\Value
      */
     public function __toString()
     {
-        return (string)$this->productCategoryId;
+        return (string)$this->name;
     }
 } 

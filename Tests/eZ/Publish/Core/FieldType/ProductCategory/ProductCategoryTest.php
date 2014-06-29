@@ -47,11 +47,15 @@ class ProductCategoryTest extends FieldTypeTest
     {
         return array(
             array(
-                array(),
+                new ProductCategoryValue( array( 'id' => true ) ),
                 'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
             ),
             array(
-                new ProductCategoryValue( array( 'productCategoryId' => true ) ),
+                new ProductCategoryValue( array( 'id' => array( 5 ) ) ),
+                'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
+            ),
+            array(
+                new ProductCategoryValue( array( 'id' => 4.3 ) ),
                 'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
             ),
             array(
@@ -69,16 +73,12 @@ class ProductCategoryTest extends FieldTypeTest
     {
         return array(
             array(
-                null,
-                new ProductCategoryValue,
-            ),
-            array(
                 1,
-                new ProductCategoryValue( 1 ),
+                new ProductCategoryValue( array( 'id' => 1, 'name' => '' ) ),
             ),
             array(
                 'foo',
-                new ProductCategoryValue( 'foo' ),
+                new ProductCategoryValue( array( 'id' => 'foo', 'name' => '' ) ),
             )
         );
     }
@@ -87,12 +87,40 @@ class ProductCategoryTest extends FieldTypeTest
     {
         return array(
             array(
-                new ProductCategoryValue(  1 ),
-                array( 'productCategoryId' => 1 ),
+                new ProductCategoryValue(
+                    array( 'id' => 1 )
+                ),
+                array(
+                    'id' => 1,
+                    'name' => ''
+                ),
             ),
             array(
-                new ProductCategoryValue( 'foo' ),
-                array( 'productCategoryId' => 'foo' ),
+                new ProductCategoryValue(
+                    10
+                ),
+                array(
+                    'id' => 10,
+                    'name' => ''
+                ),
+            ),
+            array(
+                new ProductCategoryValue(
+                    array( 'id' => 'foo' )
+                ),
+                array(
+                    'id' => 'foo',
+                    'name' => ''
+                ),
+            ),
+            array(
+                new ProductCategoryValue(
+                    array( 'id' => 1, 'name' => 'foo' )
+                ),
+                array(
+                    'id' => 1,
+                    'name' => 'foo'
+                ),
             ),
         );
     }
@@ -105,12 +133,28 @@ class ProductCategoryTest extends FieldTypeTest
                 new ProductCategoryValue,
             ),
             array(
-                array( 'productCategoryId' => 23 ),
-                new ProductCategoryValue( 23 ),
+                array( 'id' => 23 ),
+                new ProductCategoryValue(
+                    array( 'id' => 23 )
+                ),
             ),
             array(
-                array( 'productCategoryId' => 'foo' ),
-                new ProductCategoryValue( 'foo' ),
+                array( 'id' => 'foo' ),
+                new ProductCategoryValue(
+                    array( 'id' => 'foo' )
+                ),
+            ),
+            array(
+                array(
+                    'id' => 'foo',
+                    'name' => 'foo'
+                ),
+                new ProductCategoryValue(
+                    array(
+                        'id' => 'foo',
+                        'name' => 'foo'
+                    )
+                ),
             ),
         );
     }
