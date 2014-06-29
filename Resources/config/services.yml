@@ -1,6 +1,8 @@
 parameters:
     crevillo.productcategory.fieldType.ezproductcategory.class: Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\Type
-    crevillo.productcategory.fieldType.ezproductcategory.productcategory.class: Crevillo\ProductCategoryBundle\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\ProductCategory
+    crevillo.productcategory.fieldType.ezproductcategory.converter.class: Crevillo\ProductCategoryBundle\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\ProductCategory
+    crevillo.productcategory.fieldType.ezproductcategory.externalStorage.class: Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\ProductCategoryStorage
+    crevillo.productcategory.fieldType.ezproductcategory.storage_gateway.class: Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\ProductCategoryStorage\Gateway\LegacyStorage
 
 services:
     crevillo.productcategory.fieldType.ezproductcategory.class:
@@ -13,3 +15,13 @@ services:
         class: %crevillo.productcategory.fieldType.ezproductcategory.converter.class%
         tags:
             - {name: ezpublish.storageEngine.legacy.converter, alias: ezproductcategory, lazy: true, callback: '::create'}
+
+    crevillo.productcategory.fieldType.ezproductcategory.externalStorage:
+        class: %crevillo.productcategory.fieldType.ezproductcategory.externalStorage.class%
+        tags:
+            - {name: ezpublish.fieldType.externalStorageHandler, alias: ezproductcategory}
+
+    crevillo.productcategory.fieldType.ezproductcategory.storage_gateway:
+        class: %crevillo.productcategory.fieldType.ezproductcategory.storage_gateway.class%
+        tags:
+            - {name: ezpublish.fieldType.externalStorageHandler.gateway, alias: ezproductcategory, identifier: LegacyStorage}

@@ -55,6 +55,10 @@ class ProductCategoryTest extends FieldTypeTest
                 'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
             ),
             array(
+                new ProductCategoryValue( array( 'id' => 5, 'name' => 10.7 ) ),
+                'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
+            ),
+            array(
                 new ProductCategoryValue( array( 'id' => 4.3 ) ),
                 'eZ\\Publish\\Core\\Base\\Exceptions\\InvalidArgumentException',
             ),

@@ -8,6 +8,7 @@
 namespace Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory;
 
 use eZ\Publish\Core\FieldType\FieldType;
+use eZ\Publish\SPI\Persistence\Content\FieldValue;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentType;
 use eZ\Publish\SPI\FieldType\Value as SPIValue;
 use eZ\Publish\Core\FieldType\Value as BaseValue;
@@ -53,6 +54,15 @@ class Type extends FieldType
                 '$value->id',
                 'string|int',
                 $value->id
+            );
+        }
+
+        if ( !is_string( $value->name ) )
+        {
+            throw new InvalidArgumentType(
+                '$value->name',
+                'string',
+                $value->name
             );
         }
     }
@@ -139,7 +149,7 @@ class Type extends FieldType
      */
     protected function getSortInfo( BaseValue $value )
     {
-        return $value->id;
+        return (int)$value->id;
     }
 
     /**
@@ -152,4 +162,15 @@ class Type extends FieldType
         return true;
     }
 
+    /**
+     * Converts a persistence $fieldValue to a Value
+     *
+     * @param \eZ\Publish\SPI\Persistence\Content\FieldValue $fieldValue
+     *
+     * @return \eZ\Publish\Core\FieldType\Keyword\Value
+     */
+    public function fromPersistenceValue( FieldValue $fieldValue )
+    {
+        return new Value( $fieldValue->externalData );
+    }
 }

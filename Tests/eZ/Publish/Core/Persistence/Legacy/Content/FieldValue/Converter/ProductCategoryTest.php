@@ -39,7 +39,34 @@ class ProductCategoryTest extends PHPUnit_Framework_TestCase
         $productCategoryId = 1;
 
         $fieldValue = new FieldValue(
-            array( 'data' => new ProductCategoryValue( 1 ) )
+            array( 'data' => new ProductCategoryValue( $productCategoryId ) )
+        );
+
+        $storageFieldValue = new StorageFieldValue;
+
+        $this->converter->toStorageValue( $fieldValue, $storageFieldValue );
+
+        self::assertEquals( $productCategoryId, $storageFieldValue->dataInt );
+
+        $fieldValue = new FieldValue(
+            array( 'data' => new ProductCategoryValue( array( 'id' => $productCategoryId ) ) )
+        );
+
+        $storageFieldValue = new StorageFieldValue;
+
+        $this->converter->toStorageValue( $fieldValue, $storageFieldValue );
+
+        self::assertEquals( $productCategoryId, $storageFieldValue->dataInt );
+
+        $fieldValue = new FieldValue(
+            array(
+                'data' => new ProductCategoryValue(
+                    array(
+                        'id' => $productCategoryId,
+                        'name'=> 'foo',
+                    )
+                )
+            )
         );
 
         $storageFieldValue = new StorageFieldValue;
@@ -66,6 +93,6 @@ class ProductCategoryTest extends PHPUnit_Framework_TestCase
 
         $this->converter->toFieldValue( $storageFieldValue, $fieldValue );
 
-        self::assertEquals( $productCategoryId, $fieldValue->data->productCategoryId );
+        self::assertEquals( $productCategoryId, $fieldValue->data->id );
     }
 }
