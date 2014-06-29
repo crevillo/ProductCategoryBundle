@@ -14,6 +14,7 @@ use eZ\Publish\SPI\Tests\FieldType\BaseIntegrationTest;
 use Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\Type as ProductCategoryType;
 use Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\Value as ProductCategoryValue;
 use Crevillo\ProductCategoryBundle\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\ProductCategory as ProductCategoryConverter;
+use eZ\Publish\SPI\Persistence\Content\Field;
 
 /**
  * @group fieldType
@@ -82,6 +83,25 @@ class PriceIntegrationTest extends BaseIntegrationTest
     }
 
     /**
+     * Asserts that the loaded field data is correct
+     *
+     * Performs assertions on the loaded field, mainly checking that the
+     * $field->value->externalData is loaded correctly. If the loading of
+     * external data manipulates other aspects of $field, their correctness
+     * also needs to be asserted. Make sure you implement this method agnostic
+     * to the used SPI\Persistence implementation!
+     */
+    public function assertLoadedFieldDataCorrect( Field $field )
+    {
+        $this->assertEquals(
+            $this->getInitialValue()->externalData,
+            $field->value->externalData
+        );
+
+        $this->assertEquals( new ProductCategoryValue( 25 ), $field->value->data );
+        $this->assertEquals( $field->value->sortKey, 25 );
+    }
+    /**
      * Get update field value.
      *
      * Use to update the field
@@ -97,5 +117,16 @@ class PriceIntegrationTest extends BaseIntegrationTest
                 'sortKey' => 25,
             )
         );
+    }
+
+    public function assertUpdatedFieldDataCorrect( Field $field )
+    {
+        $this->assertEquals(
+            $this->getUpdatedValue()->externalData,
+            $field->value->externalData
+        );
+
+        $this->assertEquals( new ProductCategoryValue( 25 ), $field->value->data );
+        $this->assertEquals( $field->value->sortKey, 25 );
     }
 }
