@@ -3,6 +3,10 @@ parameters:
     crevillo.productcategory.fieldType.ezproductcategory.converter.class: Crevillo\ProductCategoryBundle\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\ProductCategory
     crevillo.productcategory.fieldType.ezproductcategory.externalStorage.class: Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\ProductCategoryStorage
     crevillo.productcategory.fieldType.ezproductcategory.storage_gateway.class: Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\ProductCategoryStorage\Gateway\LegacyStorage
+    crevillo.productcategory.api.service.productcategoryservice.class: Crevillo\ProductCategoryBundle\Core\ProductCategory\ProductCategoryService
+    crevillo.productcategory.api.storage_engine.legacy.handler.ezproductcategory.factory.class: Crevillo\ProductCategoryBundle\ApiLoader\LegacyProductCategoryHandlerFactory
+    crevillo.productcategory.api.storage_engine.legacy.handler.ezproductcategory.class: Crevillo\ProductCategoryBundle\Core\Persistence\Legacy\ProductCategory\ProductCategoryHandler
+
 
 services:
     crevillo.productcategory.fieldType.ezproductcategory.class:
@@ -25,3 +29,20 @@ services:
         class: %crevillo.productcategory.fieldType.ezproductcategory.storage_gateway.class%
         tags:
             - {name: ezpublish.fieldType.externalStorageHandler.gateway, alias: ezproductcategory, identifier: LegacyStorage}
+
+    crevillo.productcategory.api.service.productcategoryservice:
+        class: %crevillo.productcategory.api.service.productcategoryservice.class%
+        arguments:
+            - @crevillo.productcategory.api.storage_engine.legacy.handler.ezproductcategory
+
+    crevillo.productcategory.api.storage_engine.legacy.handler.ezproductcategory.factory:
+        class: %crevillo.productcategory.api.storage_engine.legacy.handler.ezproductcategory.factory.class%
+        arguments:
+            - @service_container
+
+    crevillo.productcategory.api.storage_engine.legacy.handler.ezproductcategory:
+        class: %crevillo.productcategory.api.storage_engine.legacy.handler.ezproductcategory.class%
+        factory_service: crevillo.productcategory.api.storage_engine.legacy.handler.ezproductcategory.factory
+        factory_method: buildLegacyProductCategoryHandler
+        arguments:
+            - @ezpublish.api.storage_engine.legacy.dbhandler
