@@ -37,7 +37,7 @@ class ProductCategoryStorage extends GatewayBasedStorage
     public function getFieldData( VersionInfo $versionInfo, Field $field, array $context )
     {
         $gateway = $this->getGateway( $context );
-        $field->value->externalData = $gateway->getProductCategoryData( $field->value->data->id );
+        $field->value->externalData = $gateway->getProductCategoryData( $versionInfo, $field);
     }
 
     /**

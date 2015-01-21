@@ -34,7 +34,7 @@ class Type extends FieldType
      */
     public function getName( SPIValue $value )
     {
-        return (string)$value->id;
+        return (string)$value->name;
     }
 
     /**
@@ -87,6 +87,10 @@ class Type extends FieldType
      */
     public function fromHash( $hash )
     {
+        if ( $hash === null )
+        {
+            return $this->getEmptyValue();
+        }
         return new Value( $hash );
     }
 
@@ -99,10 +103,11 @@ class Type extends FieldType
      */
     public function toHash( SPIValue $value )
     {
-        return array(
-            'id' => $value->id,
-            'name' => $value->name
-        );
+        if ( $this->isEmptyValue( $value ) )
+        {
+            return null;
+        }
+        return (array)$value;
     }
 
     /**
@@ -160,17 +165,5 @@ class Type extends FieldType
     public function isSearchable()
     {
         return true;
-    }
-
-    /**
-     * Converts a persistence $fieldValue to a Value
-     *
-     * @param \eZ\Publish\SPI\Persistence\Content\FieldValue $fieldValue
-     *
-     * @return \eZ\Publish\Core\FieldType\Keyword\Value
-     */
-    public function fromPersistenceValue( FieldValue $fieldValue )
-    {
-        return new Value( $fieldValue->externalData );
     }
 }

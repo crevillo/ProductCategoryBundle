@@ -8,6 +8,8 @@
 namespace Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\ProductCategoryStorage;
 
 use eZ\Publish\Core\FieldType\StorageGateway;
+use eZ\Publish\SPI\Persistence\Content\VersionInfo;
+use eZ\Publish\SPI\Persistence\Content\Field;
 
 abstract class Gateway extends StorageGateway
 {
@@ -18,5 +20,5 @@ abstract class Gateway extends StorageGateway
      *
      * @return array
      */
-    abstract public function getProductCategoryData( $productCategoryId );
+    abstract public function getProductCategoryData( VersionInfo $versionInfo, Field $field );
 }

@@ -9,6 +9,8 @@ namespace Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCatego
 
 use Crevillo\ProductCategoryBundle\eZ\Publish\Core\FieldType\ProductCategory\ProductCategoryStorage\Gateway;
 use eZ\Publish\Core\Persistence\Database\DatabaseHandler;
+use eZ\Publish\SPI\Persistence\Content\VersionInfo;
+use eZ\Publish\SPI\Persistence\Content\Field;
 use PDO;
 
 class LegacyStorage extends Gateway
@@ -61,7 +63,7 @@ class LegacyStorage extends Gateway
      * @param int $productCategoryId
      * @return array
      */
-    public function getProductCategoryData( $productCategoryId )
+    public function getProductCategoryData( VersionInfo $versionInfo, Field $field )
     {
         $dbHandler = $this->getConnection();
 
@@ -71,7 +73,7 @@ class LegacyStorage extends Gateway
             ->where(
                 $query->expr->eq(
                     $dbHandler->quoteColumn( 'id' ),
-                    $query->bindValue( $productCategoryId, null, PDO::PARAM_INT )
+                    $query->bindValue( $field->value->data['id'], null, PDO::PARAM_INT )
                 )
             );
 
