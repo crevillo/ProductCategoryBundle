@@ -1,4 +1,4 @@
 system:
-    global:
+    default:
         field_templates:
             - {template: EzProductCategoryBundle:fields:ezproductcategory.html.twig, priority: 10}
